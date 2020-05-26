@@ -17,12 +17,25 @@ def read_file():
     file_handler.close()
     return data
 
-def get_country(country_name, dataset):
-    country_data = {}
+def get_country_data(dataset):
+    country_dict = {}
+    country_list = []
+
+    # get country names and store in list
+    for i in range(1, len(dataset)):
+        if dataset[i][1] not in country_list:
+            country_list.append(dataset[i][1])
+
+    # for each country, store its data into dictionary
+    # fix dates
     for i in range(len(dataset)):
-        if dataset[i][1] == country_name:
-            country_data[country_name] = dataset[i][4:8]
+        if dataset[i][1] in country_list:
+            country_dict[dataset[i][1]] = dataset[i][4:8]
+    return country_dict
 
 
-
-my_data = read_file()
+if __name__ == '__main__':
+    my_data = read_file()
+    country_dict = get_country_data(my_data)
+    for key, value in country_dict.items():
+        print(key, value)
