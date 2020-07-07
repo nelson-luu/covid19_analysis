@@ -44,16 +44,19 @@ def get_country_data(dataset):
 
 
 def plot_country(country_name, country_dict):
-    import numpy as np
-    x_value = []
-    y_value = []
+    from matplotlib import pyplot as plt
+    date_val = []
+    y_val = []
+    for item in country_dict[country_name]:
+        date_val.append(item[0])
+        y_val.append(item[1])
 
-    return country_dict[country_name]
+    #plt.plot(date_val, y_val)
+    #plt.show()
+
 
 if __name__ == '__main__':
     my_data = read_file()
     country_dict = get_country_data(my_data)
     country_name = 'Lesotho'
-    for key, item in country_dict.items():
-        print(key, item)
-    #print(plot_country(country_name, country_dict))
+    print(plot_country(country_name, country_dict))
