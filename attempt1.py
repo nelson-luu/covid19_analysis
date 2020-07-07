@@ -28,11 +28,18 @@ def get_country_data(dataset):
 
     # for each country, store its data into dictionary
     # fix dates
-    for i in range(len(dataset)):
+    for i in range(1, len(dataset)):
         if dataset[i][1] in country_dict:
-            country_dict[dataset[i][1]].append([dataset[i][4:8]])
+            country_dict[dataset[i][1]].append([dataset[i][4],
+                                                int(dataset[i][5]),
+                                                int(dataset[i][6]),
+                                                int(dataset[i][7])])
         else:
-            country_dict[dataset[i][1]] = [dataset[i][4:8]]
+            country_dict[dataset[i][1]] = [[dataset[i][4],
+                                            int(dataset[i][5]),
+                                            int(dataset[i][6]),
+                                            int(dataset[i][7])]]
+
     return country_dict
 
 
@@ -47,4 +54,6 @@ if __name__ == '__main__':
     my_data = read_file()
     country_dict = get_country_data(my_data)
     country_name = 'Lesotho'
-    print(plot_country(country_name, country_dict))
+    for key, item in country_dict.items():
+        print(key, item)
+    #print(plot_country(country_name, country_dict))
