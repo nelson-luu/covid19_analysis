@@ -34,22 +34,20 @@ def get_country_data(dataset):
     # fix dates
     for i in range(1, len(dataset)):
         if dataset[i][1] in country_dict:
-            if bool(re.match("^[1-12]/[0-3][1-9]/[0-9][0-9]$", dataset[i][4])):
+            if bool(re.match("^[1-2]*[0-9]/[0-3][1-9]/[0-9][0-9]$", dataset[i][4])):
                 date_object = datetime.strptime(dataset[i][4], '%m/%d/%y')
-
-            elif bool(re.match("^[1-12]/[0-3][1-9]/[0-9z][0-9][0-9][0-9]$", dataset[i][4])):
+            elif bool(re.match("^[1-2]*[0-9]/[0-3][0-9]/[0-9][0-9][0-9][0-9]$", dataset[i][4])):
                 date_object = datetime.strptime(dataset[i][4], '%m/%d/%Y')
 
             country_dict[dataset[i][1]].append([date_object,
                                                 int(dataset[i][5]),
                                                 int(dataset[i][6]),
                                                 int(dataset[i][7])])
-            print(dataset[i][4], i)
         else:
-            if bool(re.match("^[1-12]/[0-3][1-9]/[0-9][0-9]$", dataset[i][4])):
+            if bool(re.match("^[1-2]*[0-9]/[0-3][1-9]/[0-9][0-9]$", dataset[i][4])):
                 date_object = datetime.strptime(dataset[i][4], '%m/%d/%y')
 
-            elif bool(re.match("^[1-12]/[0-1][1-9]/[0-9][0-9]$", dataset[i][4])):
+            elif bool(re.match("^[1-2]*[0-9]/[0-3][0-9]/[0-9][0-9][0-9][0-9]$", dataset[i][4])):
                 date_object = datetime.strptime(dataset[i][4], '%m/%d/%Y')
 
             country_dict[dataset[i][1]] = [[date_object,
@@ -62,7 +60,7 @@ def get_country_data(dataset):
 
 def plot_country(country_name, country_dict):
     from matplotlib import pyplot as plt
-    from matplotlib import dates as mdates
+    from matplotlib.dates import DateFormatter, MonthLocator
     date_val = []
     y_val = []
     total_count = 0
@@ -71,8 +69,12 @@ def plot_country(country_name, country_dict):
         date_val.append(item[0])
         y_val.append(total_count)
 
-    plt.plot(date_val, y_val)
-    plt.gcf().autofmt_xdate()
+    months = MonthLocator()
+    monthsFmt = DateFormatter("%b %y")
+    fig, ax = plt.subplots()
+    ax.plot(date_val, y_val)
+    ax.xaxis.set_major_locator(months)
+    ax.xaxis.set_major_formatter(monthsFmt)
 
     plt.show()
 
@@ -80,6 +82,8 @@ def plot_country(country_name, country_dict):
 if __name__ == '__main__':
     my_data = read_file()
     country_dict = get_country_data(my_data)
-    country_name = 'Lesotho'
-    print(country_dict)
-    #print(plot_country(country_name, country_dict))
+    country_name = 'France'
+    for key in country_dict[country_name]:
+        print(key)
+    #print(country_dict)
+    #plot_country(country_name, country_dict)
