@@ -83,7 +83,13 @@ if __name__ == '__main__':
     my_data = read_file()
     country_dict = get_country_data(my_data)
     country_name = 'France'
-    for key in country_dict[country_name]:
-        print(key)
+    current = 0
+    # figure out a way to merge counts of the same date
+    for value in country_dict[country_name]:
+        if current == value[0]:
+            print('hi')
+        print(value)
+        current = value[0]
+
     #print(country_dict)
     #plot_country(country_name, country_dict)
