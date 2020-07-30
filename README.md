@@ -16,5 +16,7 @@ Data obtained from: https://www.kaggle.com/imdevskp/corona-virus-report
 - Allow users specify which country to inspect without editing the code
 - Create a GUI (Graphical User Interface) to provide interactivity for the user.
 
+# Note to self:
+- Remember to update last modified dates in both the readme.md and python files
 
 Last Updated: 30/07/2020
