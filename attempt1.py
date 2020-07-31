@@ -1,6 +1,6 @@
 # Author: Nelson Luu
 # Created: 26/05/2020
-# Last Modified: 30/07/2020
+# Last Modified: 31/07/2020
 # Description: Plot cases over time for Australia
 # Last Update:
 
@@ -65,39 +65,63 @@ def plot_country(country_name, country_dict):
 
     # initialise variables
     date_val = []
-    y_val = []
+    confirmed_val = []
+    deaths_val = []
+    recovered_val = []
     current = -1
-    confirmed = -1
+    confirmed, deaths, recovered = -1, -1, -1
     accumulated_list = []
 
     # merge counts of the same date
     for value in country_dict[country_name]:
         if current == value[0]:
             confirmed += value[1]
-            accumulated_list[-1] = ([value[0], confirmed])
+            deaths += value[2]
+            recovered += value[3]
+            accumulated_list[-1] = ([value[0], confirmed, deaths, recovered])
 
         else:
             confirmed = value[1]
-            accumulated_list.append([value[0], confirmed])
+            deaths = value[2]
+            recovered = value[3]
+            accumulated_list.append([value[0], confirmed, deaths, recovered])
         current = value[0]
 
     # retrieve accumulated values into x and y lists for plotting
     for item in accumulated_list:
         date_val.append(item[0])
-        y_val.append(item[1])
-        print(item[0], item[1])
+        confirmed_val.append(item[1])
+        deaths_val.append(item[2])
+        recovered_val.append(item[3])
+        print(item[0], item[1], item[2], item[3])
 
     # plot graph
     months = MonthLocator()
     monthsFmt = DateFormatter("%b %y")
-    fig, ax = plt.subplots()
-    ax.set_title("Total Confirmed Cases for " + country_name.capitalize())
-    ax.set_ylabel("Number of Confirmed Cases")
-    ax.plot(date_val, y_val)
+    fig, (ax1, ax2, ax3) = plt.subplots(nrows=3, ncols=1)
+
+    # subplot for confirmed cases
+    ax1.set_title("Total Confirmed Cases for " + country_name.capitalize())
+    ax1.set_ylabel("Number of Confirmed Cases")
+    ax1.plot(date_val, confirmed_val)
+
+    # subplot for confirmed cases
+    ax2.set_title("Total Confirmed Cases for " + country_name.capitalize())
+    ax2.set_ylabel("Number of Deaths")
+    ax2.plot(date_val, deaths_val)
+
+    # subplot for confirmed cases
+    ax3.set_title("Total Confirmed Cases for " + country_name.capitalize())
+    ax3.set_ylabel("Number of Recovered Cases")
+    ax3.plot(date_val, recovered_val)
 
     # prevent overcrowding of date labels
-    ax.xaxis.set_major_locator(months)
-    ax.xaxis.set_major_formatter(monthsFmt)
+    ax1.xaxis.set_major_locator(months)
+    ax1.xaxis.set_major_formatter(monthsFmt)
+    ax2.xaxis.set_major_locator(months)
+    ax2.xaxis.set_major_formatter(monthsFmt)
+    ax3.xaxis.set_major_locator(months)
+    ax3.xaxis.set_major_formatter(monthsFmt)
     plt.tight_layout()
     plt.show()
 
@@ -105,6 +129,6 @@ def plot_country(country_name, country_dict):
 if __name__ == '__main__':
     my_data = read_file()
     country_dict = get_country_data(my_data)
-    country_name = 'France'
+    country_name = 'Australia'
 
     plot_country(country_name, country_dict)
