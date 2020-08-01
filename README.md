@@ -10,6 +10,7 @@ Data obtained from: https://www.kaggle.com/imdevskp/corona-virus-report
 - matplotlib
 - re (regex)
 - datetime
+- tkinter
 
 # To Do List:
 - ~~Include and graph cases by deaths and recovered~~ (31/07/2020)
@@ -19,4 +20,4 @@ Data obtained from: https://www.kaggle.com/imdevskp/corona-virus-report
 # Note to self:
 - Remember to update last modified dates in both the readme.md and python files
 
-Last Updated: 31/07/2020
+Last Updated: 1/08/2020
