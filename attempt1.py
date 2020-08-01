@@ -116,12 +116,10 @@ def plot_country(country_name, country_dict):
     ax3.plot(date_val, recovered_val)
 
     # prevent overcrowding of date labels
-    ax1.xaxis.set_major_locator(months)
-    ax1.xaxis.set_major_formatter(monthsFmt)
-    ax2.xaxis.set_major_locator(months)
-    ax2.xaxis.set_major_formatter(monthsFmt)
-    ax3.xaxis.set_major_locator(months)
-    ax3.xaxis.set_major_formatter(monthsFmt)
+    for subplot in [ax1, ax2, ax3]:
+        subplot.xaxis.set_major_locator(months)
+        subplot.xaxis.set_major_formatter(monthsFmt)
+
     plt.tight_layout()
     plt.show()
 
